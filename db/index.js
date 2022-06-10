@@ -1,20 +1,19 @@
-const { Pool } = require("pg");
+const { Pool, Client } = require("pg");
 
-const isProduction = process.env.NODE_ENV === "production"
+const isProduction = process.env.NODE_ENV === "production";
 
-const connectionString = `postgresql://${process.env.PGUSER} : ${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`
+const connectionString = `postgresql://${process.env.PGUSER} : ${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
 
-const pool = new Pool({
+const client = new Client({
 	// connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-	connectionString:process.env.DATABASE_URL,
-	ssl:{
-		rejectUnauthorized:false
-	}
-	
+	connectionString: process.env.DATABASE_URL,
+	ssl: {
+		rejectUnauthorized: false,
+	},
 });
-pool.connect()
+client.connect();
 
 module.exports = {
-	query: (text, params) => pool.query(text, params),
-	pool:pool
+	query: (text, params) => client.query(text, params),
+	client: client,
 };
