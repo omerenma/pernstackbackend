@@ -5,23 +5,15 @@ const db = require("../db");
 // Get all restaurants
 
 router.get('/', (req, res) =>{
-	res.send('Welcome to our')
+	res.send('Welcome to our CRUD')
 })
-router.get("/restaurants",  (req, res) => {
-	const select = "SELECT * FROM restaurants"
-	try {
-		const resp =  db.pool.query(select)
-		res.send(resp)
-		
-	} catch (error) {
-		res.send(error)
+router.get("/restaurants", async (req, res) => {
+	const { rows } = await db.pool.query("SELECT * FROM restaurants");
+	if (rows.length > 0) {
+		res.status(200).json(rows);
+	} else {
+		res.status(200).json({ message: "Something went wrong" });
 	}
-	// const { rows } = await db.pool.query("SELECT * FROM restaurants");
-	// if (rows.length > 0) {
-	// 	res.status(200).json(rows);
-	// } else {
-	// 	res.status(200).json({ message: "Something went wrong" });
-	// }
 });
 
 // Get a restaurant
