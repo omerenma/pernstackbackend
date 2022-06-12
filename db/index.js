@@ -13,6 +13,6 @@ const pool = new Pool({
 pool.connect();
 
 module.exports = {
-	query: (text, params) => client.query(text, params),
+	query: (text, params) => pool.query(text, params),
 	pool: pool,
 };
