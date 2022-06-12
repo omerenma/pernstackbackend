@@ -4,6 +4,9 @@ const db = require("../db");
 
 // Get all restaurants
 
+router.get('/', (req, res) =>{
+	res.send('Welcome to our CRUD')
+})
 router.get("/restaurants", async (req, res) => {
 	const { rows } = await db.pool.query("SELECT * FROM restaurants");
 	if (rows.length > 0) {
