@@ -7,9 +7,9 @@ const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_P
 
 const pool = new Pool({
 	connectionString: process.env.NODE_ENV === 'production' ? isProduction : connectionString,
-	// ssl: {
-	// 	rejectUnauthorized: false,
-	// },
+	ssl: {
+		rejectUnauthorized: false,
+	},
 });
 // pool.connect();
 
