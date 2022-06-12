@@ -5,7 +5,7 @@ const db = require("../db");
 // Get all restaurants
 
 router.get('/', (req, res) =>{
-	res.send('Welcome to our CRUD')
+	res.send('Welcome to our')
 })
 router.get("/restaurants",  (req, res) => {
 	const select = "SELECT * FROM restaurants"
