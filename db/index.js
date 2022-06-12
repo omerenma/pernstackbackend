@@ -4,15 +4,15 @@ const isProduction = process.env.NODE_ENV === "production";
 
 const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`;
 
-const client = new Client({
+const pool = new Pool({
 	connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-	// ssl: {
-	// 	rejectUnauthorized: false,
-	// },
+	ssl: {
+		rejectUnauthorized: false,
+	},
 });
-client.connect();
+pool.connect();
 
 module.exports = {
 	query: (text, params) => client.query(text, params),
-	client: client,
+	pool: pool,
 };
