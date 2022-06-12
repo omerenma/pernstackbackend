@@ -12,7 +12,7 @@ router.get("/restaurants", async (req, res) => {
 	 .then(data =>{
 		 res.send(data)
 	 }).catch(err => {
-		 res.send(err)
+		 res.send('err')
 	 })
 	
 });
