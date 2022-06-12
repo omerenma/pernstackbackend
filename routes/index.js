@@ -14,7 +14,7 @@ router.get("/restaurants", async (req, res) => {
 });
 
 // Get a restaurant
-router.get("/:id", async (req, res) => {
+router.get("/restaurants/:id", async (req, res) => {
 	const { id } = req.params;
 
 	const { rows } = await db.query("SELECT * FROM restaurants WHERE id = $1", [
@@ -25,11 +25,14 @@ router.get("/:id", async (req, res) => {
 
 // Post a restaurant
 
-router.post("/", async (req, res) => {
-	const result = await db.query(
-		'INSERT INTO restaurants (name, location, price_range) values("Chicken", "Gombe", 5)'
-	);
-	res.send(result);
+router.post("/restaurants", async (req, res) => {
+	const { name, location, price_range } = req.body;
+	const insert =
+		"INSERT INTO restaurants(name, location, price_range) VALUES($1, $2, $3)";
+	const values = [name, location, price_range];
+
+	const result = await db.query(insert, values);
+	res.send(result.rowCount);
 });
 
 // Edit a restaurant
