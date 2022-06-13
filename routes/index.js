@@ -11,7 +11,8 @@ router.get("/", (req, res) => {
 	res.send("Welcome to our CRUD");
 });
 router.get("/restaurants", async (req, res) => {
-	const {rows} = await db.query("SELECT * FROM restaurants")
+	const select = "SELECT * FROM restaurants"
+	const {rows} = await db.query(select)
 	res.send(rows)
 		
 });
