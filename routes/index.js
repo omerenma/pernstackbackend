@@ -86,4 +86,4 @@ router.delete("/restaurants/:id", async (req, res) => {
 		res.send(error.messsage);
 	}
 });
-module.exports = router;
+module.exports = postgresRouter;
