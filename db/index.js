@@ -11,7 +11,7 @@ const pool = new Pool({
 		rejectUnauthorized: isProduction ? false : true,
 	},
 });
-// pool.connect();
+pool.connect();
 
 
 

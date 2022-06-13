@@ -1,13 +1,16 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db");
+const Router = require('express-promise-router')
+
+const postgresRouter = new Router()
 
 // Get all restaurants
 
-router.get("/", (req, res) => {
+postgresRouter.get("/", (req, res) => {
 	res.send("Welcome to our CRUD");
 });
-router.get("/restaurants", async (req, res) => {
+postgresRouter.get("/restaurants", async (req, res) => {
 	db.pool
 		.query("SELECT * FROM restaurants")
 		.then((data) => {
