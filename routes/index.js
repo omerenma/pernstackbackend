@@ -1,24 +1,19 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db");
-const Router = require('express-promise-router')
+const Router = require("express-promise-router");
 
-const postgresRouter = new Router()
+const postgresRouter = new Router();
 
 // Get all restaurants
 
-postgresRouter.get("/", (req, res) => {
+router.get("/", (req, res) => {
 	res.send("Welcome to our CRUD");
 });
-postgresRouter.get("/restaurants", async (req, res) => {
-	db.pool
-		.query("SELECT * FROM restaurants")
-		.then((data) => {
-			res.json(data.rows);
-		})
-		.catch((err) => {
-			res.send("err");
-		});
+router.get("/restaurants", async (req, res) => {
+	const {rows} = await db.query("SELECT * FROM restaurants")
+	res.send(rows)
+		
 });
 
 // Get a restaurant
@@ -86,4 +81,4 @@ router.delete("/restaurants/:id", async (req, res) => {
 		res.send(error.messsage);
 	}
 });
-module.exports = postgresRouter;
+module.exports = router;
