@@ -12,7 +12,7 @@ const pool = new Pool({
 		rejectUnauthorized:  false
 	},
 });
-pool.query(createReviewsTable())
+// pool.query(createReviewsTable())
 pool.connect();
 
 module.exports = {
