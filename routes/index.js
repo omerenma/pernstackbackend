@@ -8,7 +8,7 @@ const postgresRouter = new Router();
 // Get all restaurants
 
 router.get("/", (req, res) => {
-	res.send("Welcome to our CRUD");
+	res.send("Welcome to our CRUD")
 });
 router.get("/restaurants",  async(req, res) => {
 	const select = "SELECT * FROM restaurants"
