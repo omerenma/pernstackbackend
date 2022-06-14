@@ -8,13 +8,12 @@ const postgresRouter = new Router();
 // Get all restaurants
 
 router.get("/", (req, res) => {
-	res.send("Welcome to our CRUD")
+	res.send("Welcome to our CRUD");
 });
-router.get("/restaurants",  async(req, res) => {
-	const select = "SELECT * FROM restaurants"
-	const {rows} =  await db.query(select)
-	res.send(rows)
-		
+router.get("/restaurants", async (req, res) => {
+	const select = "SELECT * FROM restaurants";
+	const { rows } = await db.query(select);
+	res.send(rows);
 });
 
 // Get a restaurant
