@@ -1,5 +1,5 @@
 const { Pool, Client } = require("pg");
-const {createReviewsTable} = require('./db')
+const {createReviewsTable, createProduct} = require('./db')
 require("dotenv").config();
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -14,7 +14,7 @@ const pool = new Pool({
 });
 
 pool.connect();
-pool.query(createReviewsTable)
+pool.query(createReviewsTable, createProduct)
 
 module.exports = {
 	query: (text, params) => pool.query(text, params),

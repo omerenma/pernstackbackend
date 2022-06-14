@@ -11,7 +11,16 @@ const createReviewsTable =`
     );
     `;
 
+    const createProduct =`
+    CREATE TABLE IF NOT EXISTS reviews (
+        id SERIAL PRIMARY KEY,
+        name varchar(50) not null ,
+        
+    );
+    `;
+
 
 module.exports = {
 	createReviewsTable,
+    createProduct
 };
