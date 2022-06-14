@@ -1,8 +1,7 @@
 const { Pool } = require("pg");
 const pool = new Pool();
 
-const createReviewsTable = () => {
-	const queryText = `
+const createReviewsTable =`
     CREATE TABLE IF NOT EXISTS reviews (
         id SERIAL PRIMARY KEY,
         restaurants_id int REFERENCES restaurants (id),
@@ -11,10 +10,7 @@ const createReviewsTable = () => {
         price_range int not null
     );
     `;
-	pool.query(queryText).then((res) => {
-		console.log(res);
-	});
-};
+
 
 module.exports = {
 	createReviewsTable,

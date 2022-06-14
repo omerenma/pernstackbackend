@@ -12,8 +12,9 @@ const pool = new Pool({
 		rejectUnauthorized:  false
 	},
 });
-// pool.query(createReviewsTable())
-pool.connect(createReviewsTable());
+
+pool.connect();
+pool.query(createReviewsTable)
 
 module.exports = {
 	query: (text, params) => pool.query(text, params),
