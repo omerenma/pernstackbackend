@@ -14,7 +14,7 @@ const createReviewsTable = `
 const createProduct = `
     CREATE TABLE IF NOT EXISTS products (
         id SERIAL PRIMARY KEY,
-        name varchar(50) not null ,
+        name varchar(50) not null 
         
     );
     `;
