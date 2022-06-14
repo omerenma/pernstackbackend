@@ -14,7 +14,8 @@ const pool = new Pool({
 });
 
 pool.connect();
-pool.query(createReviewsTable, createProduct)
+pool.query(createReviewsTable)
+pool.query(createProduct)
 
 module.exports = {
 	query: (text, params) => pool.query(text, params),
