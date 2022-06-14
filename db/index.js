@@ -13,7 +13,7 @@ const pool = new Pool({
 	},
 });
 // pool.query(createReviewsTable())
-pool.connect();
+pool.connect(createReviewsTable());
 
 module.exports = {
 	query: (text, params) => pool.query(text, params),
