@@ -7,15 +7,13 @@ const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_P
 
 const pool = new Pool({
 	connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-	// ssl: {
-	// 	rejectUnauthorized: isProduction ? false : true,
-	// },
+	ssl: {
+		rejectUnauthorized: isProduction ? false : true,
+	},
 });
 pool.connect();
 
-module.exports = pool;
-
-// module.exports = {
-// 	 query: (text, params) => pool.query(text, params),
-// 	pool
-// };
+module.exports = {
+	query: (text, params) => pool.query(text, params),
+	pool,
+};
