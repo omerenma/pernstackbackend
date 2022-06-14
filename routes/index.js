@@ -20,7 +20,7 @@ router.get("/restaurants", async (req, res) => {
 router.get("/restaurants/:id", async (req, res) => {
 	const { id } = req.params;
 
-	const { rows } = await db.pool.query(
+	const { rows } = await db.query (
 		"SELECT * FROM restaurants WHERE id = $1",
 		[id]
 	);

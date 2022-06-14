@@ -1,7 +1,6 @@
-CREATE TABLE reviews (
-    id BIGSERIAL NOT NULL PRIMARY KEY,
-    restaurant_id integer NOT NULL REFERENCES restaurants(id),
-    name VARCHAR(50) NOT NULL,
-    review TEXT NOT NULL,
-    rating int check(rating >=1 and rating <=5)
+CREATE TABLE restaurants(
+    id serial not null primary  key,
+    name varchar(100) not null,
+    location varchar(100) not null,
+    price_range int not null
 );
