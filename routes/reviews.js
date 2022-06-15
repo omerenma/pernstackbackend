@@ -43,7 +43,7 @@ router.post("/reviews", async (req, res) => {
 		const result = await db.query(insert, values);
 		res.send(result);
 	} catch (error) {
-		res.send(error)
+		res.send(error.message)
 	}
 });
 module.exports = router;
