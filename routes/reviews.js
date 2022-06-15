@@ -38,7 +38,7 @@ router.post("/reviews", async (req, res) => {
 		const { name, review, rating } = req.body;
 		const { restaurants_id } = req.params;
 		const insert =
-			"INSERT INTO restaurants(restaurants_id, name, review,  rating) VALUES($1, $2, $3, $4) returning *";
+			"INSERT INTO reviews(restaurants_id, name, review,  rating) VALUES($1, $2, $3, $4) returning *";
 		const values = [restaurants_id, name, review, rating];
 		const result = await db.query(insert, values);
 		res.send(result);
