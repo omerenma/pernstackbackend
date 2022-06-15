@@ -22,7 +22,10 @@ router.get("/reviews/:id", async (req, res) => {
 	const select_reviews = 'SELECT * FROM reviews WHERE restaurants_id = $1  ';
 	try {
 		const result = await db.query(select_reviews, [id]);
-        res.json(result)
+        res.json({
+            data:result.rows,
+            total_review: result.rowCount
+        })
 	} catch (error) {
         res.send(error.message)
     }
