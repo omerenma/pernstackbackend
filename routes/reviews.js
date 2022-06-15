@@ -19,10 +19,9 @@ router.get("/reviews", async (req, res) => {
 // Get review for a particular restaurants
 router.get("/reviews/:id", async (req, res) => {
 	const { id} = req.params;
-    console.log(restaurants_id, 'res id')
-	const select_reviews = `SELECT * FROM reviews WHERE restaurants_id = ${id}  `;
+	const select_reviews = 'SELECT * FROM reviews WHERE restaurants_id = $1  ';
 	try {
-		const result = await db.query(select_reviews);
+		const result = await db.query(select_reviews, [id]);
         res.json(result)
 	} catch (error) {
         res.send(error.message)
