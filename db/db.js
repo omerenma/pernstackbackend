@@ -3,11 +3,11 @@ const pool = new Pool();
 
 const createReviewsTable = `
     CREATE TABLE IF NOT EXISTS reviews (
-        id SERIAL PRIMARY KEY,
-        restaurants_id int REFERENCES restaurants (id),
+        id BIGSERIAL NOT NULL PRIMARY KEY,
+        restaurants_id int not null REFERENCES restaurants (id),
         name varchar(50) not null ,
-        location varchar(50) not null,
-        price_range int not null
+        review text not null,
+        rating int check(rating >=1 and rating <=5) not null
     );
     `;
 
