@@ -33,7 +33,7 @@ router.get("/reviews/:id", async (req, res) => {
 
 // Add review
 
-router.post("/reviews", async (req, res) => {
+router.post("/reviews/:id", async (req, res) => {
 	try {
 		const { name, review, rating } = req.body;
 		const { id } = req.params;
