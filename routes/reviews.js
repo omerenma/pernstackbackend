@@ -18,17 +18,32 @@ router.get("/reviews", async (req, res) => {
 
 // Get review for a particular restaurants
 router.get("/reviews/:id", async (req, res) => {
-	const { id} = req.params;
-	const select_reviews = 'SELECT * FROM reviews WHERE restaurants_id = $1  ';
+	const { id } = req.params;
+	const select_reviews = "SELECT * FROM reviews WHERE restaurants_id = $1  ";
 	try {
 		const result = await db.query(select_reviews, [id]);
-        res.json({
-            data:result.rows,
-            total_review: result.rowCount
-        })
+		res.json({
+			data: result.rows,
+			total_review: result.rowCount,
+		});
 	} catch (error) {
-        res.send(error.message)
-    }
+		res.send(error.message);
+	}
 });
 
+// Add review
+
+router.post("/reviews", async (req, res) => {
+	try {
+		const { name, review, rating } = req.body;
+		const { restaurants_id } = req.params;
+		const insert =
+			"INSERT INTO restaurants(restaurants_id, name, review,  rating) VALUES($1, $2, $3, $4) returning *";
+		const values = [restaurants_id, name, review, rating];
+		const result = await db.query(insert, values);
+		res.send(result);
+	} catch (error) {
+		res.status(400).json({ message: "Something went wrong" });
+	}
+});
 module.exports = router;
