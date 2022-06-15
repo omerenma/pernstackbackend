@@ -9,7 +9,7 @@ router.get('/reviews', async (req, res) =>{
     const select_reviews = 'SELECT * FROM reviews';
     try {
         const result = await db.query(select_reviews)
-        res.json(result)
+        res.json(result.rows)
     } catch (error) {
         res.send(error.message)
     } 
