@@ -6,11 +6,14 @@ const bodyParser = require("body-parser");
 const restaurants = require("./routes/index");
 // Review routes
 const reviews = require("./routes/reviews");
+const auth = require('./routes/auth')
 
 app.use(express.json());
 
 app.use("/api/v1", restaurants);
 app.use("/api/v1", reviews);
+// Register and Login route
+app.use('/api/v1/auth', auth)
 
 const port = process.env.PORT || 4000;
 
