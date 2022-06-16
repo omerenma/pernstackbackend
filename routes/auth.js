@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const db = require("../db");
 const bcrypt = require("bcryptjs");
-
+const  jwt_generator = require('../utils/jwt_generator')
 // Register user
 
 router.post("/register", async (req, res) => {
@@ -19,8 +19,9 @@ router.post("/register", async (req, res) => {
 		const insert =
 			"INSERT INTO users(name, email, password) VALUES ($1, $2, $3) returning *";
 		const value = [name, email, hashPassword];
-		const post = await db.query(insert, value);
-		res.status(201).json(post);
+		const newUser = await db.query(insert, value);
+        const token = jwt_generator(newUser.rows.id)
+		res.status(201).json({token});
 	} catch (error) {
 		res.status(500).json({ message: "Internal server error" });
 	}
