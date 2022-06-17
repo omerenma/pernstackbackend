@@ -2,8 +2,8 @@ const router = require("express").Router();
 const db = require("../db");
 const bcrypt = require("bcryptjs");
 const jwt_generator = require("../utils/jwt_generator");
-// Register user
 
+// Register user
 router.post("/register", async (req, res) => {
 	try {
 		const { name, email, password } = req.body;
@@ -28,7 +28,6 @@ router.post("/register", async (req, res) => {
 });
 
 // Login user
-
 router.post("/login", async (req, res) => {
 	try {
 		const { email, password } = req.body;

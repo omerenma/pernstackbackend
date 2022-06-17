@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db");
-
+const authorization = require('../utils/jwt_authorization')
 // Select sql
 
 // get reviews
 
-router.get("/reviews", async (req, res) => {
+router.get("/reviews", authorization, async (req, res) => {
 	const select_reviews = "SELECT * FROM reviews";
 	try {
 		const result = await db.query(select_reviews);
