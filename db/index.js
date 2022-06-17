@@ -10,9 +10,9 @@ const pool = new Pool({
 	connectionString: isProduction
 		? process.env.HEROKU_POSTGRESQL_JADE_URL
 		: connectionString,
-	// ssl: {
-	// 	rejectUnauthorized: false,
-	// },
+	ssl: {
+		rejectUnauthorized: false,
+	},
 });
 
 pool.connect();
