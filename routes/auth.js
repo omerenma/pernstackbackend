@@ -6,13 +6,15 @@ const jwt_generator = require("../utils/jwt_generator");
 
 // Register user
 router.post(
-	"/register",
-	check("email").isEmail().withMessage("Not a valid email"),
-	check("password")
-		.isLength({ min: 7 })
-		.withMessage("Password length must be greater 6")
-		.matches(/\d/)
-		.withMessage("Must contain a number"),
+	"/register"
+	// ,
+	// check("email").isEmail().withMessage("Not a valid email"),
+	// check("password")
+	// 	.isLength({ min: 7 })
+	// 	.withMessage("Password length must be greater 6")
+	// 	.matches(/\d/)
+	// 	.withMessage("Must contain a number")
+		,
 	async (req, res) => {
 		const errors = validationResult(req);
 		if (!errors.isEmpty()) {
