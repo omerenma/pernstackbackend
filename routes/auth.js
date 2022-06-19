@@ -16,15 +16,15 @@ router.post(
 	// 	.withMessage("Must contain a number")
 		,
 	async (req, res) => {
-		const errors = validationResult(req);
-		if (!errors.isEmpty()) {
-			errors.errors.map((error) => {
-				res.status(400).json({
-					message: error.msg,
-				});
-			});
-			return;
-		}
+		// const errors = validationResult(req);
+		// if (!errors.isEmpty()) {
+		// 	errors.errors.map((error) => {
+		// 		res.status(400).json({
+		// 			message: error.msg,
+		// 		});
+		// 	});
+		// 	return;
+		// }
 		try {
 			const { name, email, password, phone} = req.body;
 			const hashPassword = await bcrypt.hash(password, 10);
