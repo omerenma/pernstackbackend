@@ -24,7 +24,7 @@ router.post(
 			return;
 		}
 		try {
-			const { name, email, password } = req.body;
+			const { name, email, password, phone} = req.body;
 			const hashPassword = await bcrypt.hash(password, 10);
 			const check = await db.query("SELECT * FROM users WHERE email = $1", [
 				email,
@@ -35,8 +35,8 @@ router.post(
 					.json({ message: "User with this email already exist" });
 			}
 			const insert =
-				"INSERT INTO users(name, email, password) VALUES ($1, $2, $3) returning *";
-			const value = [name, email, hashPassword];
+				"INSERT INTO users(name, email, password) VALUES ($1, $2, $3, $4) returning *";
+			const value = [name, email, hashPassword, phone];
 			const newUser = await db.query(insert, value);
 			const token = jwt_generator(newUser.rows.id);
 			res.status(201).json({ token });
