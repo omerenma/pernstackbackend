@@ -27,7 +27,7 @@ router.get("/reviews/:id", async (req, res) => {
 			total_review: result.rowCount,
 		});
 	} catch (error) {
-		res.send(error.message);
+		res.send(error.message)
 	}
 });
 
