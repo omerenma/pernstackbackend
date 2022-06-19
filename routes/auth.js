@@ -6,7 +6,7 @@ const jwt_generator = require("../utils/jwt_generator");
 
 // Register user
 router.post(
-	"/register"
+	"/register",
 	// ,
 	// check("email").isEmail().withMessage("Not a valid email"),
 	// check("password")
@@ -14,7 +14,6 @@ router.post(
 	// 	.withMessage("Password length must be greater 6")
 	// 	.matches(/\d/)
 	// 	.withMessage("Must contain a number")
-		,
 	async (req, res) => {
 		// const errors = validationResult(req);
 		// if (!errors.isEmpty()) {
@@ -26,7 +25,7 @@ router.post(
 		// 	return;
 		// }
 		try {
-			const { name, email, password, phone} = req.body;
+			const { name, email, phone, password } = req.body;
 			const hashPassword = await bcrypt.hash(password, 10);
 			const check = await db.query("SELECT * FROM users WHERE email = $1", [
 				email,
@@ -37,8 +36,8 @@ router.post(
 					.json({ message: "User with this email already exist" });
 			}
 			const insert =
-				"INSERT INTO users(name, email, password, phone) VALUES ($1, $2, $3, $4) returning *";
-			const value = [name, email, hashPassword, phone];
+				"INSERT INTO users(name, email, phone, password) VALUES ($1, $2, $3, $4) returning *";
+			const value = [name, email, phone, hashPassword];
 			const newUser = await db.query(insert, value);
 			const token = jwt_generator(newUser.rows.id);
 			res.status(201).json({ token });
