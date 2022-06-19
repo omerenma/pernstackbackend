@@ -37,7 +37,7 @@ router.post(
 					.json({ message: "User with this email already exist" });
 			}
 			const insert =
-				"INSERT INTO users(name, email, password) VALUES ($1, $2, $3, $4) returning *";
+				"INSERT INTO users(name, email, password, phone) VALUES ($1, $2, $3, $4) returning *";
 			const value = [name, email, hashPassword, phone];
 			const newUser = await db.query(insert, value);
 			const token = jwt_generator(newUser.rows.id);
