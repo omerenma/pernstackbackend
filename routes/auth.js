@@ -50,13 +50,12 @@ router.post(
 
 // Login user
 router.post("/login", async (req, res) => {
+	const { email, password } = req.body;
+	console.log(email, password);
 	try {
-		const { email, password } = req.body;
-		console.log(email, password)
 		const select = "SELECT * FROM users WHERE email = $1";
 		const value = [email];
 		const user = await db.query(select, value);
-		
 
 		if (user.rows.length === 0) {
 			res.json({ message: "Invalid email" });
@@ -65,10 +64,12 @@ router.post("/login", async (req, res) => {
 
 		if (passwordMatch) {
 			const token = jwt_generator(user.rows[0]);
-			res.status(200).json({ token , ...user.rows[0]});
+			res.status(200).json({ token, ...user.rows[0] });
 		}
 		res.status(401).json({ message: "Invalid password" });
-	} catch (error) {}
+	} catch (error) {
+		return error.message;
+	}
 });
 
 module.exports = router;
