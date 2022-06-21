@@ -65,7 +65,7 @@ router.post("/login", async (req, res) => {
 				const token = jwt_generator(user.rows[0]);
 				res.status(200).json({ token, ...user.rows[0] });
 			}
-			res.status(401).json({ message: "Invalid password" });
+			res.status(401).json({ message: "Invalid password" })
 		});
 
 
