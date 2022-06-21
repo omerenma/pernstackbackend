@@ -52,9 +52,11 @@ router.post(
 router.post("/login", async (req, res) => {
 	try {
 		const { email, password } = req.body;
+		console.log(email, password)
 		const select = "SELECT * FROM users WHERE email = $1";
 		const value = [email];
 		const user = await db.query(select, value);
+		
 
 		if (user.rows.length === 0) {
 			res.json({ message: "Invalid email" });
