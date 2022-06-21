@@ -55,7 +55,7 @@ router.post("/login", async (req, res) => {
 		const select = "SELECT * FROM users WHERE email = $1";
 		const value = [email];
 		const user = await db.query(select, value);
-		console.log(user, 'user')
+		console.log(user.rows, 'user')
 
 		if (user.rows.length === 0) {
 			res.json({ message: "Invalid credentials" });
