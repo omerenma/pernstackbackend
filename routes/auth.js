@@ -55,18 +55,20 @@ router.post("/login", async (req, res) => {
 	try {
 		const select = "SELECT * FROM users WHERE email = $1";
 		const value = [email];
-		const user = await db.query(select, value);
+		await db.query(select, value).then((user) => {
+			if (user.rows.length === 0) {
+				res.json({ message: "Invalid email" });
+			}
+			const passwordMatch = await bcrypt.compare(password, user.rows[0].password);
 
-		if (user.rows.length === 0) {
-			res.json({ message: "Invalid email" });
-		}
-		const passwordMatch = await bcrypt.compare(password, user.rows[0].password);
+			if (passwordMatch) {
+				const token = jwt_generator(user.rows[0]);
+				res.status(200).json({ token, ...user.rows[0] });
+			}
+			res.status(401).json({ message: "Invalid password" });
+		});
 
-		if (passwordMatch) {
-			const token = jwt_generator(user.rows[0]);
-			res.status(200).json({ token, ...user.rows[0] });
-		}
-		res.status(401).json({ message: "Invalid password" });
+
 	} catch (error) {
 		return error.message;
 	}
