@@ -52,10 +52,10 @@ router.post(
 router.post("/login", async (req, res) => {
 	try {
 		const { email, password } = req.body;
-		console.log(email, password)
 		const select = "SELECT * FROM users WHERE email = $1";
 		const value = [email];
 		const user = await db.query(select, value);
+		console.log(user, 'user')
 
 		if (user.rows.length === 0) {
 			res.json({ message: "Invalid credentials" });
@@ -64,7 +64,7 @@ router.post("/login", async (req, res) => {
 
 		if (passwordMatch) {
 			const token = jwt_generator(user.rows[0].id);
-			res.status(200).json({ token });
+			res.status(200).json({ token, user });
 		}
 		res.status(401).json({ message: "Invalid password" });
 	} catch (error) {}
