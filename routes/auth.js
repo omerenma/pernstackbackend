@@ -57,7 +57,7 @@ router.post("/login", async (req, res) => {
 		const user = await db.query(select, value);
 
 		if (user.rows.length === 0) {
-			res.json({ message: "Invalid credentials" });
+			res.json({ message: "Invalid email" });
 		}
 		const passwordMatch = await bcrypt.compare(password, user.rows[0].password);
 
