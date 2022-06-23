@@ -16,7 +16,6 @@ const pool = new Pool({
 });
 
 pool.connect();
-pool.query(createUserTable);
 
 module.exports = {
 	query: (text, params) => pool.query(text, params),

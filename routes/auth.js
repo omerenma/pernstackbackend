@@ -26,7 +26,7 @@ router.post(
 		}
 		try {
 			const { name, email, phone, password } = req.body;
-			const hashPassword = await bcrypt.hash(req.body.password, 10);
+			const hashPassword = await bcrypt.hash(password, 10);
 			const check = await db.query("SELECT * FROM users WHERE email = $1", [
 				req.body.email,
 			]);
@@ -37,15 +37,9 @@ router.post(
 			}
 			const insert =
 				"INSERT INTO users(name, email, phone, password) VALUES ($1, $2, $3, $4) returning *";
-			const value = [
-				req.body.name,
-				req.body.email,
-				req.body.phone,
-				hashPassword,
-			];
-			console.log(value, 'value')
-			await db.query(insert, value).then((user) => {
-				console.log(user, 'new user')
+			const value = [name, email, phone, hashPassword];
+			await db.pool.query(insert, value).then((user) => {
+				console.log(user, "new user");
 				// const token = jwt_generator(user.rows[0]);
 				// res.status(201).json({ token });
 			});
