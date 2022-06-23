@@ -45,8 +45,9 @@ router.post(
 			];
 
 			await db.query(insert, value).then((user) => {
-				const token = jwt_generator(user.rows[0]);
-				res.status(201).json({ token });
+				console.log(user, 'new user')
+				// const token = jwt_generator(user.rows[0]);
+				// res.status(201).json({ token });
 			});
 		} catch (error) {
 			res.status(500).json({ message: "Internal server error" });
