@@ -40,7 +40,7 @@ router.post(
 			const value = [name, email, phone, hashPassword];
 			console.log(value, "value");
 			const newUser = await db.query(insert, value);
-			const token = jwt_generator(newUser.rows.id);
+			const token = jwt_generator(newUser.rows[0]);
 			res.status(201).json({ token });
 		} catch (error) {
 			res.status(500).json({ message: "Internal server error" });
