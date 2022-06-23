@@ -38,7 +38,7 @@ router.post(
 			const insert =
 				"INSERT INTO users(name, email, phone, password) VALUES ($1, $2, $3, $4) returning *";
 			const value = [name, email, phone, hashPassword];
-			await db.pool.query(insert, value).then((user) => {
+			await db.query(insert, value).then((user) => {
 				console.log(user, "new user");
 				// const token = jwt_generator(user.rows[0]);
 				// res.status(201).json({ token });
