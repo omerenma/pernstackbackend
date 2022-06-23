@@ -43,7 +43,7 @@ router.post(
 				req.body.phone,
 				hashPassword,
 			];
-
+			console.log(value, 'value')
 			await db.query(insert, value).then((user) => {
 				console.log(user, 'new user')
 				// const token = jwt_generator(user.rows[0]);
