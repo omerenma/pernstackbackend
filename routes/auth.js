@@ -58,28 +58,58 @@ router.post(
 );
 
 // Login user
-router.post("/login", async (req, res) => {
+// router.post("/login", async (req, res) => {
+// 	const { email, password } = req.body;
+// 	const select = "SELECT * FROM users WHERE email = $1";
+// 	const value = [email];
+
+// 	await db
+// 		.query(select, [req.body.email])
+// 		.then((user) => {
+// 			console.log(user.rows, 'user')
+// 			if (user.rows.length === 0) {
+// 				return res.status(402).json({ message: "Invalid credential" });
+// 			} else {
+// 				const passwordMatch = bcrypt.compare(password, user.rows[0].password);
+
+// 				if (!passwordMatch) {
+// 					return res.status(4011).json({ message: "Invalid password" });
+// 				} else {
+// 					const token = jwt_generator(user.rows[0]);
+// 					return res.status(200).json({ token, ...user.rows[0] });
+// 				}
+// 			}
+// 		});
+// });
+
+
+router.post("/login", validInfo, async (req, res) => {
 	const { email, password } = req.body;
-	const select = "SELECT * FROM users WHERE email = $1";
-	const value = [email];
-
-	await db
-		.query(select, [req.body.email])
-		.then((user) => {
-			console.log(user.rows, 'user')
-			// if (user.rows.length === 0) {
-			// 	return res.status(402).json({ message: "Invalid credential" });
-			// } else {
-			// 	const passwordMatch = bcrypt.compare(password, user.rows[0].password);
-
-			// 	if (!passwordMatch) {
-			// 		return res.status(4011).json({ message: "Invalid password" });
-			// 	} else {
-			// 		const token = jwt_generator(user.rows[0]);
-			// 		return res.status(200).json({ token, ...user.rows[0] });
-			// 	}
-			// }
-		});
-});
-
+  
+	try {
+	  const user = await pool.query("SELECT * FROM users WHERE user_email = $1", [
+		email
+	  ]);
+  
+	  if (user.rows.length === 0) {
+		return res.status(401).json("Invalid Credential");
+	  }
+  
+	  const validPassword = await bcrypt.compare(
+		password,
+		user.rows[0].user_password
+	  );
+  
+	  if (!validPassword) {
+		return res.status(401).json("Invalid Credential");
+	  }
+	  const jwtToken = jwt_generator(user.rows[0].user_id);
+	  return res.json({ jwtToken });
+	} catch (err) {
+	  console.error(err.message);
+	  res.status(500).send("Server error");
+	}
+  });
+  
+  
 module.exports = router;
