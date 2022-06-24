@@ -60,7 +60,7 @@ router.post(
 // Login user
 router.post("/login", async (req, res) => {
 	const { email, password } = req.body;
-	const select = "SELECT * FROM users WHERE email = $1 RETURNIG *";
+	const select = "SELECT * FROM users WHERE email = $1";
 	const value = [email];
 
 	await db
