@@ -44,13 +44,12 @@ router.post(
 					"INSERT INTO users(name, email, phone, password) VALUES ($1, $2, $3, $4) RETURNING *",
 					[name, email, phone, hashPassword]
 				)
-				.then((res) => {
-					console.log(res);
+				.then((response) => {
+					const token = jwt_generator(newUser.rows[0]);
+					return res.status(201).json({ token , response});
 				})
 				.catch((err) => {
-					console.log(err, "errrrr");
-					const token = jwt_generator(newUser.rows[0]);
-					res.status(201).json({ token });
+					res.json(err.message);
 				});
 		} catch (error) {
 			res.status(500).json({ message: "Internal server error" });
