@@ -97,13 +97,13 @@ router.post("/login", async (req, res) => {
   
 	  const validPassword = await bcrypt.compare(
 		password,
-		user.rows[0].user_password
+		user.rows[0].password
 	  );
   
 	  if (!validPassword) {
 		return res.status(401).json("Invalid Credential");
 	  }
-	  const jwtToken = jwt_generator(user.rows[0].user_id);
+	  const jwtToken = jwt_generator(user.rows[0].id);
 	  return res.json({ jwtToken });
 	} catch (err) {
 	  console.error(err.message);
