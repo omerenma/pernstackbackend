@@ -39,12 +39,15 @@ router.post(
 			// const insert =
 			// 	"INSERT INTO users(name, email, phone, password) VALUES ($1, $2, $3, $4) returning *";
 			// const value = [name, email, phone, hashPassword];
-			const newUser = await db.query(
+			await db.query(
 				"INSERT INTO users(name, email, phone, password) VALUES ($1, $2, $3, $4) RETURNING *",
 				[name, email, phone, hashPassword]
-			);
-			const token = jwt_generator(newUser.rows[0]);
-			res.status(201).json({ token });
+			)
+			.then((res) => {
+				console.log(res)
+			})
+			// const token = jwt_generator(newUser.rows[0]);
+			// res.status(201).json({ token });
 		} catch (error) {
 			res.status(500).json({ message: "Internal server error" })
 		}
