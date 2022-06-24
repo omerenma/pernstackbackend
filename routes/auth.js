@@ -34,8 +34,8 @@ router.post(
 					.status(400)
 					.json({ message: "User with this email already exist" });
 			}
-			const salt = await bcrypt.genSalt(10);
-			const hashPassword = await bcrypt.hash(password, salt);
+			// const salt = await bcrypt.genSalt(10);
+			const hashPassword = await bcrypt.hash(password, 10);
 			// const insert =
 			// 	"INSERT INTO users(name, email, phone, password) VALUES ($1, $2, $3, $4) returning *";
 			// const value = [name, email, phone, hashPassword];
