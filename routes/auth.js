@@ -26,7 +26,6 @@ router.post(
 		}
 		try {
 			const { name, email, phone, password } = req.body;
-			const hashPassword = await bcrypt.hash(password, 10);
 			const check = await db.query("SELECT * FROM users WHERE email = $1", [
 				req.body.email,
 			]);
@@ -35,13 +34,17 @@ router.post(
 					.status(400)
 					.json({ message: "User with this email already exist" });
 			}
-			const insert =
-				"INSERT INTO users(name, email, phone, password) VALUES ($1, $2, $3, $4) returning *";
-			const value = [name, email, phone, hashPassword];
-			const newUser = await db.query(insert, value)
-				const token = jwt_generator(newUser.rows[0]);
-				res.status(201).json({ token });
-			
+			const salt = await bcrypt.genSalt(10);
+			const hashPassword = await bcrypt.hash(password, salt);
+			// const insert =
+			// 	"INSERT INTO users(name, email, phone, password) VALUES ($1, $2, $3, $4) returning *";
+			// const value = [name, email, phone, hashPassword];
+			const newUser = await db.query(
+				"INSERT INTO users(name, email, phone, password) VALUES ($1, $2, $3, $4) RETURNING *",
+				[name, email, phone, hashPassword]
+			);
+			const token = jwt_generator(newUser.rows[0]);
+			res.status(201).json({ token });
 		} catch (error) {
 			res.status(500).json({ message: "Internal server error" });
 		}
