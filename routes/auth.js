@@ -77,6 +77,9 @@ router.post("/login", async (req, res) => {
 			 }
 			 res.status(401).json({ message: "Invalid password" });
 		 })
+		 .catch(err => {
+			 return err.message
+		 })
 	} catch (error) {
 		return res.json(error.message)
 	}
