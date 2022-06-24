@@ -46,7 +46,7 @@ router.post(
 				)
 				.then((response) => {
 					const token = jwt_generator(response.rows[0]);
-					return res.status(201).json({ token, response });
+					return res.status(201).json({ token });
 				})
 				.catch((err) => {
 					res.json(err.message);
