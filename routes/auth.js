@@ -64,7 +64,7 @@ router.post("/login", async (req, res) => {
 	const value = [email];
 
 	await db
-		.query("SELECT * FROM users WHERE email = $1", email)
+		.query("SELECT * FROM users WHERE email = $1", [req.body.email])
 		.then((user) => {
 			console.log(user.rows, 'user')
 			// if (user.rows.length === 0) {
