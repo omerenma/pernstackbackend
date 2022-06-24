@@ -83,7 +83,7 @@ router.post(
 // });
 
 
-router.post("/login", validInfo, async (req, res) => {
+router.post("/login", async (req, res) => {
 	const { email, password } = req.body;
   
 	try {
