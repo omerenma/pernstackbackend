@@ -46,6 +46,9 @@ router.post(
 			.then((res) => {
 				console.log(res)
 			})
+			.catch(err => {
+				console.log(err, 'errrrr')
+			})
 			// const token = jwt_generator(newUser.rows[0]);
 			// res.status(201).json({ token });
 		} catch (error) {
