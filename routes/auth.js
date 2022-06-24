@@ -45,8 +45,8 @@ router.post(
 					[name, email, phone, hashPassword]
 				)
 				.then((response) => {
-					const token = jwt_generator(newUser.rows[0]);
-					return res.status(201).json({ token , response});
+					const token = jwt_generator(response.rows[0]);
+					return res.status(201).json({ token, response });
 				})
 				.catch((err) => {
 					res.json(err.message);
