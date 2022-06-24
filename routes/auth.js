@@ -60,11 +60,11 @@ router.post(
 // Login user
 router.post("/login", async (req, res) => {
 	const { email, password } = req.body;
-	const select = "SELECT * FROM users WHERE email = $1";
+	const select = "SELECT * FROM users WHERE email = $1 RETURNIG *";
 	const value = [email];
 
 	await db
-		.query(" select * from users where email=$1", [req.body.email])
+		.query(select, [req.body.email])
 		.then((user) => {
 			console.log(user.rows, 'user')
 			// if (user.rows.length === 0) {
