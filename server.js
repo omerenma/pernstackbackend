@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const app = express();
 const cors = require('cors')
+const bodyParser = require('body-parser')
 const bodyParser = require("body-parser");
 // Restaurants routes
 const restaurants = require("./routes/index");
@@ -11,6 +12,8 @@ const auth = require('./routes/auth')
 
 app.use(cors())
 app.use(express.json());
+app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.json())
 
 app.use("/api/v1", restaurants);
 app.use("/api/v1", reviews);
