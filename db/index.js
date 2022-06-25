@@ -6,7 +6,7 @@ const isProduction = process.env.NODE_ENV === "production";
 
 const connectionString = `postgresql://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
 
-const pool = new Pool({
+const client = new Client({
 	connectionString: isProduction
 		? process.env.HEROKU_POSTGRESQL_JADE_URL
 		: connectionString,
@@ -18,8 +18,8 @@ const pool = new Pool({
 // pool.connect();
 
 module.exports = {
-	query: (text, params) => pool.query(text, params),
-	pool,
+	query: (text, params) => client.query(text, params),
+	client,
 };
 
 // module.exports = pool;
