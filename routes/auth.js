@@ -58,30 +58,26 @@ router.post(
 );
 
 // Login user
-router.post("/login", async (req, res) => {
-	try {
-		const { email, password } = req.body;
-		console.log(req.body.email, "email req", req.body.password, "req password");
-		const user = await db.query("SELECT * FROM users WHERE email = $1", [
-			req.body.email,
-		]);
-		if (user.rows.length != 0) {
-			await bcrypt
-				.compare(req.body.password, user.rows[0].password)
-				.then((isMatch) => {
-					if (!isMatch) {
-						return res.status(401).json({ message: "Invalid password" });
-					} else {
-						const token = jwt_generator(user.rows[0]);
-						return res.status(200).json({ token, ...user.rows[0] });
-					}
-				});
-		}
-	} catch (error) {}
-	if (user.rows.length === 0) {
-		return res.status(402).json({ message: "Invalid credential" });
-	} else {
-	}
-});
+router.get('/login', async (req, res) => {
+    try {
+      const client = await db.pool.connect()
+      const result = await client.query('SELECT * FROM users where email = $1', [req.body.email])
+	  if(result.rows.length != 0){
+		  const isMatch = bcrypt.compare(result.rows[0].password, req.body.password)
+		   if(!isMatch){
+			   return res.status(401).json('Incorrect password')
+		   }else{
+			const token = jwt_generator(result.rows[0])
+			return res.status(200).json({token})
+		   }
+	  }else{
+		  res.status(401).json({message:"Email not found"})
+	  }
+    //   client.release();
+    } catch (err) {
+      console.error(err);
+      res.send("Error " + err);
+    }
+  })
 
 module.exports = router;
