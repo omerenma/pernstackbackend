@@ -58,7 +58,7 @@ router.post(
 );
 
 // Login user
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
       const client = await db.pool.connect()
       const result = await client.query('SELECT * FROM users where email = $1', [req.body.email])
