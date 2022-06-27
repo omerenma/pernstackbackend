@@ -61,11 +61,16 @@ router.post(
 router.post("/login", async (req, res) => {
 	const { email, password } = req.body;
 	try {
-		const user = await db.pool.query("select * from users");
-		const matchEmail = user.rows.map((r) => {
-			return r.email === email;
-		});
-		console.log(matchEmail);
+		const user = await db.pool.query("select * from users where email = $1", [
+			email,
+		]);
+
+		console.log(user);
+		// if(!matchEmail){
+		// 	res.status(404).json({message:"Email not found"})
+		// }else{
+		// 	bcrypt.compare()
+		// }
 	} catch (error) {
 		console.log(error);
 	}
