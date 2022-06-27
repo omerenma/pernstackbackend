@@ -64,7 +64,7 @@ router.post("/login", async (req, res) => {
 		const user = await db.pool('select * from users')
 		console.log(user)
 	} catch (error) {
-		
+		console.log(error)
 	}
 });
 
