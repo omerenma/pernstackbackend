@@ -60,7 +60,12 @@ router.post(
 // Login user
 router.post("/login", async (req, res) => {
 	const {email, password}  = req.body
-	console.log(email, password)
+	try {
+		const user = await db.pool('select * from users')
+		console.log(user)
+	} catch (error) {
+		
+	}
 });
 
 module.exports = router;
