@@ -63,14 +63,12 @@ router.post("/login", async (req, res) => {
 	try {
 		const user = await db.pool.query("select * from users where email = $1", [
 			email,
-		]);
-
-		console.log(user);
-		// if(!matchEmail){
-		// 	res.status(404).json({message:"Email not found"})
-		// }else{
-		// 	bcrypt.compare()
-		// }
+		])
+		if(user.rows.length != 0){
+			console.log('User with email found')
+		}else{
+			console.log('User with email not found')
+		}
 	} catch (error) {
 		console.log(error);
 	}
