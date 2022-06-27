@@ -60,7 +60,7 @@ router.post(
 // Login user
 router.post("/login", async (req, res) => {
 	const {email, password}  = req.body
-	res.send(email, password)
+	console.log(email, password)
 });
 
 module.exports = router;
