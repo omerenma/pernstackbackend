@@ -64,18 +64,19 @@ router.post("/login", async (req, res) => {
 		const user = await db.pool.query("select * from users where email = $1", [
 			email,
 		]);
-		const isMatch = await bcrypt.compare(password, user.rows[0].password)
+		const isMatch = await bcrypt.compare(password, user.rows[0].password);
 		if (user.rows.length != 0) {
-			if(isMatch){
-				console.log('Password match')
-			}else{
-				console.log('Password not match')
+			if (isMatch) {
+				const token = jwt_generator(user.rows[0]);
+				res.status(200).json({ token, ...user.rows });
+			} else {
+				res.status(400).json({ message: "Password not correct" });
 			}
 		} else {
-			console.log("User with email not found");
+			res.status(404).json({ message: "Email not found" });
 		}
 	} catch (error) {
-		console.log(error);
+		res.json({ message: "Something went wrong" });
 	}
 });
 
