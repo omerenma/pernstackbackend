@@ -64,14 +64,13 @@ router.post("/login", async (req, res) => {
 		const user = await db.pool.query("select * from users where email = $1", [
 			email,
 		]);
+		const isMatch = await bcrypt.compare(user.rows.password, password)
 		if (user.rows.length != 0) {
-			bcrypt.compare(user.rows.password, password).then((isMatch) => {
-				if (isMatch) {
-					console.log("Password matches");
-				} else {
-					console.log("Password not match");
-				}
-			});
+			if(isMatch){
+				console.log('Password match')
+			}else{
+				console.log('Password not match')
+			}
 		} else {
 			console.log("User with email not found");
 		}
