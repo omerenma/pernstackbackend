@@ -59,7 +59,8 @@ router.post(
 
 // Login user
 router.post("/login", async (req, res) => {
-	res.send("Login route");
+	const {email, password}  = req.body
+	res.send(email, password)
 });
 
 module.exports = router;
