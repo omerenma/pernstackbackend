@@ -59,12 +59,12 @@ router.post(
 
 // Login user
 router.post("/login", async (req, res) => {
-	const {email, password}  = req.body
+	const { email, password } = req.body;
 	try {
-		const user = await db.pool.query('select * from users')
-		console.log(user)
+		const user = await db.pool.query("select * from users");
+		console.log(user.rows);
 	} catch (error) {
-		console.log(error)
+		console.log(error);
 	}
 });
 
