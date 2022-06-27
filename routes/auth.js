@@ -59,26 +59,7 @@ router.post(
 
 // Login user
 router.post("/login", async (req, res) => {
-	
-	const { email, password } = req.body;
-	const select = "SELECT * FROM users WHERE email = $1";
-	const value = [email];
-	console.log(req.body.email, "email req", req.body.password, "req password");
-	await db.query("SELECT * FROM users WHERE email = $1", [req.body.email]).then((user) => {
-		console.log(user.rows, "user");
-		if (user.rows.length === 0) {
-			return res.status(402).json({ message: "Invalid credential" });
-		} else {
-			const passwordMatch = bcrypt.compare(req.body.password, user.rows.password);
-
-			if (!passwordMatch) {
-				return res.status(4011).json({ message: "Invalid password" });
-			} else {
-				const token = jwt_generator(user.rows[0]);
-				return res.status(200).json({ token, ...user.rows[0] });
-			}
-		}
-	});
+	res.send("Login route");
 });
 
 module.exports = router;
