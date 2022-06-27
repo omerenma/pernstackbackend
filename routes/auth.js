@@ -62,9 +62,10 @@ router.post("/login", async (req, res) => {
 	const { email, password } = req.body;
 	try {
 		const user = await db.pool.query("select * from users");
-		user.rows.map(r => {
-			console.log(r.email === email)
-		})
+		const matchEmail = user.rows.map((r) => {
+			return r.email === email;
+		});
+		console.log(matchEmail);
 	} catch (error) {
 		console.log(error);
 	}
