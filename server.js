@@ -22,7 +22,7 @@ app.use("/api/v1/auth", auth);
 const serverStart = () => {
 	try {
 		app.listen(process.env.PORT, () => {
-			console.log(`server running on port ${port}`);
+			console.log(`server running on port ${process.env.PORT}`);
 		});
 	} catch (error) {
 		console.log(error.message);
