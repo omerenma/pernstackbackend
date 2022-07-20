@@ -5,13 +5,14 @@
   "author": "onyebuchi kingsley",
   "license": "MIT",
   "engines": {
-    "node": "16.13.2"
+    "node": "v16.16.0"
   },
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
   "dependencies": {
+    "all": "^0.0.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
