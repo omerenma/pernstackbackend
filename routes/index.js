@@ -1,7 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db");
+const multer = require("multer");
+const path = require("path");
 
+const storage = multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, "../images");
+	},
+	filename: (req, file, cb) => {
+		console.log(file);
+		cb(null, Date.now() + path.extname(file.originalname));
+	},
+});
+
+const upload = multer({ storage: storage });
 
 // Get all restaurants
 
@@ -18,15 +31,16 @@ router.get("/restaurants", async (req, res) => {
 router.get("/restaurants/:id", async (req, res) => {
 	const { id } = req.params;
 
-	const { rows } = await db.pool.query("SELECT * FROM restaurants WHERE id = $1", [
-		id,
-	]);
+	const { rows } = await db.pool.query(
+		"SELECT * FROM restaurants WHERE id = $1",
+		[id]
+	);
 	res.status(200).json(rows);
 });
 
 // Post a restaurant
 
-router.post("/restaurants", async (req, res) => {
+router.post("/restaurants", upload.single("image"), async (req, res) => {
 	const { name, location, price_range } = req.body;
 
 	const insert =
