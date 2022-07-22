@@ -6,7 +6,7 @@ const path = require("path");
 // const upload = require("express-fileupload");
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
-require("dotenv");
+require("dotenv").config()
 
 cloudinary.config({
 	secure: true,
