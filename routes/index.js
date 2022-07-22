@@ -6,17 +6,17 @@ const path = require("path");
 
 
 
-const storage = multer.diskStorage({
-	destination: (req, file, cb) => {
-		cb(null, path.join(__dirname, '../images') );
-	},
-	filename: (req, file, cb) => {
-		console.log(file);
-		cb(null,Date.now() + path.extname(file.originalname));
-	},
-});
+// const storage = multer.diskStorage({
+// 	destination: (req, file, cb) => {
+// 		cb(null, path.join(__dirname, '../images') );
+// 	},
+// 	filename: (req, file, cb) => {
+// 		console.log(file);
+// 		cb(null,Date.now() + path.extname(file.originalname));
+// 	},
+// });
 
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
 
 // Get all restaurants
 
@@ -42,10 +42,10 @@ router.get("/restaurants/:id", async (req, res) => {
 
 // Post a restaurant
 
-router.post("/restaurants", upload.single('image'), async (req, res) => {
-	// const {  mimetype, size } = req.file;
-     const filepath = req.file.path;
-	 console.log(filepath, 'file path')
+router.post("/restaurants", async (req, res) => {
+	console.log(req.file, 'file data')
+
+     
 	const { name, location, price_range } = req.body;
 
 	const insert =
