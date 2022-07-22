@@ -45,7 +45,7 @@ router.get("/restaurants/:id", async (req, res) => {
 
 // Post a restaurant
 
-router.post("/restaurants", app.use(upload()), async (req, res) => {
+router.post("/restaurants" ,async (req, res) => {
 	console.log(req.file, 'file data')
 
      
