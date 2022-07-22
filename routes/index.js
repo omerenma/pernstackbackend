@@ -48,7 +48,7 @@ router.post("/restaurants", async (req, res) => {
 		console.log(req.files, "file data");
 	}
 
-	let file = req.files.file
+	let file = req.files.file.image
 	let filepath = file.name
 	const { name, location, price_range } = req.body;
 
