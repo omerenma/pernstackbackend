@@ -45,7 +45,7 @@ router.get("/restaurants/:id", async (req, res) => {
 
 router.post("/restaurants", async (req, res) => {
 	if (req.files) {
-		console.log(req.files.image, 'data from file');
+		console.log(req.files.image.name, "data from file");
 	}
 
 	// let file = req.files.file.image
