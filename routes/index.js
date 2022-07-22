@@ -4,26 +4,25 @@ const db = require("../db");
 const multer = require("multer");
 const path = require("path");
 const upload = require("express-fileupload");
-const cloudinary = require('cloudinary').v2
-const {CloudinaryStorage} = require('multer-storage-cloudinary')
-require('dotenv')
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+require("dotenv");
 
 cloudinary.config({
-	secure:true,
-	cloud_name:process.env.CLOUDINARY_NAME,
-	api_key:process.env.CLOUDINARY_API_KEY,
-	api_secret:process.env.CLOUDINARY_API_SECRET
-})
+	secure: true,
+	cloud_name: process.env.CLOUDINARY_NAME,
+	api_key: process.env.CLOUDINARY_API_KEY,
+	api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const storage = new CloudinaryStorage({
-	cloudinary:cloudinary,
-	params:{
-		folder:'pernstack'
-	}
-})
+	cloudinary: cloudinary,
+	params: {
+		folder: "pernstack",
+	},
+});
 
-const upload = multer({storage:storage})
-
+const upload = multer({ storage: storage });
 
 // Get all restaurants
 
@@ -49,16 +48,15 @@ router.get("/restaurants/:id", async (req, res) => {
 
 // Post a restaurant
 
-router.post("/restaurants", upload.single('image'), async (req, res) => {
-
-	const filepath = req.file.path
-	console.log(filepath, 'file path')
+router.post("/restaurants", upload.single("image"), async (req, res) => {
+	const filepath = req.file.path;
+	console.log(filepath, "file path");
 
 	const { name, location, price_range } = req.body;
 
 	const insert =
 		"INSERT INTO restaurants(name, location, price_range, filepath) VALUES($1, $2, $3, $4) returning * ";
-	const values = [name, location, price_range, filepath ];
+	const values = [name, location, price_range, filepath];
 
 	await db.pool
 		.query(insert, values)
