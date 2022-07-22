@@ -53,7 +53,7 @@ router.post("/restaurants", async (req, res) => {
 	const { name, location, price_range } = req.body;
 
 	const insert =
-		"INSERT INTO restaurants(name, location, price_range) VALUES($1, $2, $3) returning * ";
+		"INSERT INTO restaurants(name, location, price_range) VALUES($1, $2, $3, $4) returning * ";
 	const values = [name, location, price_range, filepath ];
 
 	await db.pool
