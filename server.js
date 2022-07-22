@@ -3,6 +3,7 @@ require("dotenv").config();
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
+
 // Restaurants routes
 const restaurants = require("./routes/index");
 // Review routes

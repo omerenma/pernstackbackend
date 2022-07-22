@@ -4,9 +4,10 @@ const db = require("../db");
 const multer = require("multer");
 const path = require("path");
 
+
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		cb(null, "../images");
+		cb(null, '../images' );
 	},
 	filename: (req, file, cb) => {
 		console.log(file);
@@ -41,6 +42,7 @@ router.get("/restaurants/:id", async (req, res) => {
 // Post a restaurant
 
 router.post("/restaurants", upload.single("image"), async (req, res) => {
+	console.log(req.file)
 	const { name, location, price_range } = req.body;
 
 	const insert =
