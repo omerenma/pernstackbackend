@@ -45,16 +45,16 @@ router.get("/restaurants/:id", async (req, res) => {
 
 router.post("/restaurants", async (req, res) => {
 	if (req.files) {
-		console.log(req.files, "file data");
+		console.log(req.files.image, "file data");
 	}
 
-	let file = req.files.file.image
-	let filepath = file.name
+	// let file = req.files.file.image
+	// let filepath = file.name
 	const { name, location, price_range } = req.body;
 
 	const insert =
-		"INSERT INTO restaurants(name, location, price_range) VALUES($1, $2, $3, $4) returning * ";
-	const values = [name, location, price_range, filepath];
+		"INSERT INTO restaurants(name, location, price_range) VALUES($1, $2, $3) returning * ";
+	const values = [name, location, price_range];
 
 	await db.pool
 		.query(insert, values)
