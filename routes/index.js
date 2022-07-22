@@ -46,6 +46,7 @@ router.get("/restaurants/:id", async (req, res) => {
 router.post("/restaurants", async (req, res) => {
 	if (req.files) {
 		console.log(req.files.image.name, "data from file");
+		
 	}
 
 	let filepath = req.files.image.name
@@ -53,7 +54,7 @@ router.post("/restaurants", async (req, res) => {
 	const { name, location, price_range } = req.body;
 
 	const insert =
-		"INSERT INTO restaurants(name, location, price_range) VALUES($1, $2, $3, $4) returning * ";
+		"INSERT INTO restaurants(name, location, price_range, filepath) VALUES($1, $2, $3, $4) returning * ";
 	const values = [name, location, price_range, filepath ];
 
 	await db.pool
