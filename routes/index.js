@@ -48,8 +48,8 @@ router.post("/restaurants", upload.single("image"), async (req, res) => {
 	const { name, location, price_range } = req.body;
 
 	const insert =
-		"INSERT INTO restaurants(name, location, price_range) VALUES($1, $2, $3, $4, $5, $6) returning * ";
-	const values = [name, location, price_range, filepath, mimetype, size];
+		"INSERT INTO restaurants(name, location, price_range) VALUES($1, $2, $3) returning * ";
+	const values = [name, location, price_range];
 
 	await db.pool
 		.query(insert, values)
