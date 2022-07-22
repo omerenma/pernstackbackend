@@ -52,6 +52,7 @@ router.get("/restaurants/:id", async (req, res) => {
 router.post("/restaurants", upload.single('image'), async (req, res) => {
 
 	const filepath = req.file.path
+	console.log(filepath, 'file path')
 
 	const { name, location, price_range } = req.body;
 
