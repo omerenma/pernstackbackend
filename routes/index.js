@@ -42,9 +42,9 @@ router.get("/restaurants/:id", async (req, res) => {
 
 // Post a restaurant
 
-router.post("/restaurants", upload.single("image"), async (req, res) => {
-	const {  mimetype, size } = req.file;
-    const filepath = req.file.path;
+router.post("/restaurants",  async (req, res) => {
+	// const {  mimetype, size } = req.file;
+    // const filepath = req.file.path;
 	const { name, location, price_range } = req.body;
 
 	const insert =
