@@ -42,14 +42,14 @@ router.get("/restaurants/:id", async (req, res) => {
 
 // Post a restaurant
 
-router.post("/restaurants",  async (req, res) => {
+router.post("/restaurants", upload.single('image'), async (req, res) => {
 	// const {  mimetype, size } = req.file;
-    // const filepath = req.file.path;
+     const filepath = req.file.path;
 	const { name, location, price_range } = req.body;
 
 	const insert =
-		"INSERT INTO restaurants(name, location, price_range) VALUES($1, $2, $3) returning * ";
-	const values = [name, location, price_range];
+		"INSERT INTO restaurants(name, location, price_range) VALUES($1, $2, $3, $4) returning * ";
+	const values = [name, location, price_range, filepath];
 
 	await db.pool
 		.query(insert, values)
