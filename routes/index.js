@@ -45,7 +45,7 @@ router.get("/restaurants/:id", async (req, res) => {
 
 router.post("/restaurants", async (req, res) => {
 	if (req.files) {
-		console.log(req.file, "file data");
+		console.log(req.files, "file data");
 	}
 
 	const { name, location, price_range } = req.body;
