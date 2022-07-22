@@ -50,7 +50,7 @@ router.get("/restaurants/:id", async (req, res) => {
 
 router.post("/restaurants", upload.single("image"), async (req, res) => {
 	//const filepath = req.file.path;
-	if(req.file){
+	if(req.files){
 		console.log(req.files, 'filllllle')
 	}
 	console.log('hmmmmmmmm')
