@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
 	},
 	filename: (req, file, cb) => {
 		console.log(file);
-		cb(null, new Date().toISOString().replace(/:/, '-') + file.originalname  );
+		cb(null, new Date.now() + path.extname(file.originalname));
 	},
 });
 
@@ -42,12 +42,13 @@ router.get("/restaurants/:id", async (req, res) => {
 // Post a restaurant
 
 router.post("/restaurants", upload.single("image"), async (req, res) => {
-	console.log(req.file)
+	const {  mimetype, size } = req.file;
+    const filepath = req.file.path;
 	const { name, location, price_range } = req.body;
 
 	const insert =
-		"INSERT INTO restaurants(name, location, price_range) VALUES($1, $2, $3) returning * ";
-	const values = [name, location, price_range];
+		"INSERT INTO restaurants(name, location, price_range) VALUES($1, $2, $3, $4, $5, $6) returning * ";
+	const values = [name, location, price_range, filepath, mimetype, size];
 
 	await db.pool
 		.query(insert, values)
