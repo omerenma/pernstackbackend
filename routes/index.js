@@ -50,24 +50,24 @@ router.get("/restaurants/:id", async (req, res) => {
 
 router.post("/restaurants", upload.single('image'), async (req, res) => {
 	//const filepath = req.file.path;
-	console.log(req.file.path, 'request')
-	// const { name, location, price_range } = req.body;
+	const filepath = req.file.path
+	const { name, location, price_range } = req.body;
 
-	// const insert =
-	// 	"INSERT INTO restaurants(name, location, price_range, filepath) VALUES($1, $2, $3, $4) returning * ";
-	// const values = [name, location, price_range, filepath];
+	const insert =
+		"INSERT INTO restaurants(name, location, price_range, filepath) VALUES($1, $2, $3, $4) returning * ";
+	const values = [name, location, price_range, filepath];
 
-	// await db.pool
-	// 	.query(insert, values)
-	// 	.then((data) => {
-	// 		res.json({
-	// 			messsage: "Restaurant successfully added",
-	// 			data: data.rows,
-	// 		});
-	// 	})
-	// 	.catch((err) => {
-	// 		res.send(err.messsage);
-	// 	});
+	await db.pool
+		.query(insert, values)
+		.then((data) => {
+			res.json({
+				messsage: "Restaurant successfully added",
+				data: data.rows,
+			});
+		})
+		.catch((err) => {
+			res.send(err.messsage);
+		});
 });
 
 // Edit a restaurant
