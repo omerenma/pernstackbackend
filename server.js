@@ -3,7 +3,6 @@ require("dotenv").config();
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const upload = require('express-fileupload')
 
 // Restaurants routes
 const restaurants = require("./routes/index");
@@ -15,7 +14,6 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(upload())
 
 app.use("/api/v1", restaurants);
 app.use("/api/v1", reviews);

@@ -3,8 +3,11 @@ const router = express.Router();
 const db = require("../db");
 const multer = require("multer");
 const path = require("path");
+const upload = require('express-fileupload')
 
 
+const app = express()
+app.use(upload())
 
 // const storage = multer.diskStorage({
 // 	destination: (req, file, cb) => {
@@ -42,7 +45,7 @@ router.get("/restaurants/:id", async (req, res) => {
 
 // Post a restaurant
 
-router.post("/restaurants", async (req, res) => {
+router.post("/restaurants", app.use(upload()), async (req, res) => {
 	console.log(req.file, 'file data')
 
      
