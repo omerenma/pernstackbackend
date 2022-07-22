@@ -3,13 +3,12 @@ const router = express.Router();
 const db = require("../db");
 const multer = require("multer");
 const path = require("path");
-const images = require('../images')
 
 
 
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
-		cb(null, images );
+		cb(null, '../images/' );
 	},
 	filename: (req, file, cb) => {
 		console.log(file);
