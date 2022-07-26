@@ -24,6 +24,9 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 
+// Home route or dashboard
+
+
 // Get all restaurants
 
 router.get("/", (req, res) => {
