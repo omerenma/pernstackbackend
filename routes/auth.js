@@ -69,7 +69,7 @@ router.post("/login", async (req, res) => {
 			if (isMatch) {
 				const token = jwt_generator(user.rows[0]);
 				
-				res.status(200).json({token, ...user.rows} );
+				res.status(200).json({token, ...user.rows[0]} );
 			} else {
 				res.status(400).json({ message: "Password not correct" });
 			}
