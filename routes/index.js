@@ -6,7 +6,7 @@ const path = require("path");
 // const upload = require("express-fileupload");
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
-require("dotenv").config()
+require("dotenv").config();
 
 cloudinary.config({
 	secure: true,
@@ -25,7 +25,6 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage: storage });
 
 // Home route or dashboard
-
 
 // Get all restaurants
 
@@ -49,11 +48,18 @@ router.get("/restaurants/:id", async (req, res) => {
 	res.status(200).json(rows);
 });
 
+// Get restaurant bybpagination
+router.get("/restaurants/?page[offset]=1&page[limit]=1", async (req, res) => {
+	const select = "SELECT * FROM restaurants";
+	const { rows } = await db.pool.query(select);
+	res.send(rows);
+});
+
 // Post a restaurant
 
-router.post("/restaurants", upload.single('image'), async (req, res) => {
+router.post("/restaurants", upload.single("image"), async (req, res) => {
 	//const filepath = req.file.path;
-	const filepath = req.file.path
+	const filepath = req.file.path;
 	const { name, location, price_range } = req.body;
 
 	const insert =
