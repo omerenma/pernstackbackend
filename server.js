@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use("/api/v1", restaurants);
-app.use("/api/v1", reviews);
+app.use("/api/v1/reviews", reviews);
 // Register and Login route
 app.use("/api/v1/auth", auth);
 
