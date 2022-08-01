@@ -12,7 +12,7 @@ router.get("/reviews", authorization, async (req, res) => {
 		const result = await db.query(select_reviews);
 		res.json(result.rows);
 	} catch (error) {
-		res.send(error.message);
+		res.json(error.message);
 	}
 });
 
