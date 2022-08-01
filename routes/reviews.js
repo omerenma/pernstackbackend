@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../db");
-const authorization = require('../utils/jwt_authorization')
+const authorization = require("../utils/jwt_authorization");
 // Select sql
 
 // get reviews
@@ -17,7 +17,7 @@ router.get("/reviews", authorization, async (req, res) => {
 });
 
 // Get review for a particular restaurants
-router.get("/:id", async (req, res) => {
+router.get("/reviews/:id", async (req, res) => {
 	const { id } = req.params;
 	const select_reviews = "SELECT * FROM reviews WHERE restaurants_id = $1  ";
 	try {
@@ -27,7 +27,7 @@ router.get("/:id", async (req, res) => {
 			total_review: result.rowCount,
 		});
 	} catch (error) {
-		res.send(error.message)
+		res.send(error.message);
 	}
 });
 
@@ -43,7 +43,7 @@ router.post("/:id", async (req, res) => {
 		const result = await db.query(insert, values);
 		res.send(result);
 	} catch (error) {
-		res.send(error.message)
+		res.send(error.message);
 	}
 });
 module.exports = router;
