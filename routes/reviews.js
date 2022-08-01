@@ -6,7 +6,7 @@ const authorization = require('../utils/jwt_authorization')
 
 // get reviews
 
-router.get("/", authorization, async (req, res) => {
+router.get("/reviews", authorization, async (req, res) => {
 	const select_reviews = "SELECT * FROM reviews";
 	try {
 		const result = await db.query(select_reviews);
