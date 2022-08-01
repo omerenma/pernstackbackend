@@ -6,7 +6,7 @@ const authorization = require('../utils/jwt_authorization')
 
 // get reviews
 
-router.get("/reviews", authorization, async (req, res) => {
+router.get("/", authorization, async (req, res) => {
 	const select_reviews = "SELECT * FROM reviews";
 	try {
 		const result = await db.query(select_reviews);
@@ -17,7 +17,7 @@ router.get("/reviews", authorization, async (req, res) => {
 });
 
 // Get review for a particular restaurants
-router.get("/reviews/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
 	const { id } = req.params;
 	const select_reviews = "SELECT * FROM reviews WHERE restaurants_id = $1  ";
 	try {
@@ -33,7 +33,7 @@ router.get("/reviews/:id", async (req, res) => {
 
 // Add review
 
-router.post("/reviews/:id", async (req, res) => {
+router.post("/:id", async (req, res) => {
 	try {
 		const { name, review, rating } = req.body;
 		const { id } = req.params;
