@@ -68,7 +68,7 @@ router.post("/login", async (req, res) => {
 		if (user.rows.length != 0) {
 			if (isMatch) {
 				const token = jwt_generator(user.rows[0]);
-				localStorage.setItem('token', token)
+				// localStorage.setItem('token', token)
 				
 				res.status(200).json({token, ...user.rows[0]} );
 			} else {
