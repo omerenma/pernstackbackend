@@ -71,8 +71,8 @@ router.post("/login", async (req, res) => {
 				const token = jwt_generator(user.rows[0]);
 				// Storing user info on the express session
 				req.session.token = token
-				console.log(req.session.token, 'session')
-				return res.redirect('/')
+				console.log(req.session, 'session')
+				// return res.redirect('/')
 
 				//res.status(200).json({ token: token });
 			} else {
