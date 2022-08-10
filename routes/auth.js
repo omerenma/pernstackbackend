@@ -3,6 +3,7 @@ const { body, validationResult, check } = require("express-validator");
 const db = require("../db");
 const bcrypt = require("bcryptjs");
 const jwt_generator = require("../utils/jwt_generator");
+const { login } = require("../controller/index");
 
 // Register user
 router.post(
@@ -46,10 +47,10 @@ router.post(
 				)
 				.then((response) => {
 					const token = jwt_generator(response.rows[0]);
-					return res.status(201).json({ token });
+					return res.status(201).json({message:'Signup success!'});
 				})
 				.catch((err) => {
-					res.json(err.message);
+					res.json({message: err.message});
 				});
 		} catch (error) {
 			res.status(500).json({ message: "Internal server error" });
@@ -68,9 +69,12 @@ router.post("/login", async (req, res) => {
 		if (user.rows.length != 0) {
 			if (isMatch) {
 				const token = jwt_generator(user.rows[0]);
-				// localStorage.setItem('token', token)
-				
-				res.status(200).json({token:token});
+				// Storing user info on the express session
+				req.session.token = token
+
+				return res.redirect('/')
+
+				//res.status(200).json({ token: token });
 			} else {
 				res.status(400).json({ message: "Password not correct" });
 			}
@@ -78,8 +82,38 @@ router.post("/login", async (req, res) => {
 			res.status(404).json({ message: "Email not found" });
 		}
 	} catch (error) {
-		res.send(error.message)
+		res.send(error.message);
 	}
 });
+
+// Login
+
+router.post("/forgot-password", async (req, res) => {
+	const { email } = req.body;
+	// Check if user with email exists
+	const user = await db.query("SELECT * FROM users WHERE email = $1", [email]);
+	if (user.rows.length === 0) {
+		return res
+			.status(404)
+			.json({ message: `User with the email ${email} was not found`});
+	}
+});
+
+// Logout route 
+router.get('/logout', (req, res, next) => {
+	if(req.session){
+		//delete the session object
+		req.session.destroy((err) => {
+			if(err){
+				return next(err)
+			}else{
+				return res.redirect('/login')
+			}
+
+
+		})
+
+	}
+})
 
 module.exports = router;

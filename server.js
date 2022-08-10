@@ -3,11 +3,22 @@ require("dotenv").config();
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const session = require("express-session");
+require("dotenv").config();
 
 // Restaurants routes
 const restaurants = require("./routes/index");
 // Review routes
 const reviews = require("./routes/reviews");
+// express sesstion
+app.use(
+	session({
+		secret: process.env.session_secret,
+		resave: true,
+		saveUninitialized: false,
+		cookie: { maxAge: 60000 },
+	})
+);
 const auth = require("./routes/auth");
 
 app.use(cors());
