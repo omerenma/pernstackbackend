@@ -4,7 +4,7 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const credentials = require('./credentials')
+// const credentials = require('./credentials')
 
 // Restaurants routes
 const restaurants = require("./routes/index");
@@ -13,7 +13,7 @@ const reviews = require("./routes/reviews");
 
 app.use(cors());
 // Setting up cookie
-app.use(require('cookie-parser')(credentials.cookieSecret))
+// app.use(require('cookie-parser')(credentials.cookieSecret))
 // express session
 app.use(require('express-session')({
 	secret:process.env.session_secret,
