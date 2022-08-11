@@ -72,7 +72,7 @@ router.post("/login", async (req, res) => {
 				// Storing user info on the express session
 				req.session.token = token
 				console.log(req.session, 'session')
-				// return res.redirect('/')
+				return res.status(200).json(req.session)
 
 				//res.status(200).json({ token: token });
 			} else {
