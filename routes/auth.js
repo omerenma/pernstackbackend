@@ -68,8 +68,6 @@ router.post(
 					]
 				)
 				.then((response) => {
-					const token = jwt_generator(response.rows[0]);
-					res.status(201).json({ message: "Signup success!", user:response.rows[0] });
 					// send verification mail to user
 					let mailOptions = {
 						from: ' "Verify your email" <godwin2341@gmail.com>',
@@ -88,6 +86,10 @@ router.post(
 						}
 						res.send("Verification email is sent to your gmail account");
 					});
+					const token = jwt_generator(response.rows[0]);
+					res
+						.status(201)
+						.json({ message: "Signup success!", user: response.rows[0] });
 				})
 				.catch((err) => {
 					res.json({ message: err.message });
