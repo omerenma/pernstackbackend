@@ -80,7 +80,6 @@ router.post(
 					};
 
 					// sending mail
-					console.log(transporter.sendMail(mailOptions))
 					transporter.sendMail(mailOptions, (error, info) => {
 						if (error) {
 							res.json({mailError:error.message})
