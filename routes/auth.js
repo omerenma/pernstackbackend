@@ -10,42 +10,6 @@ const crypto = require('crypto')
 const nodemailer = require('nodemailer')
 
 // send verification link
-router.post("/send-email", (req, res, next) => {
-	let email = req.body.email;
-	db.query("SELECT * FROM users ")
-		.then((result) => {
-			let type = "success";
-			let msg = "Email already verified";
-			if (result.length > 0) {
-				let token = randomtoken.generate(20);
-				if (result[0].verify == 0) {
-					let sent = sendEmail(email, token);
-					if (sent != 0) {
-						let data = {
-							token: token,
-						};
-						db.query(
-							'UPDATE users SET ? WHERE email ="' + email + '"',
-							data,
-							function (err, result) {
-								if (err) throw err;
-							}
-						);
-						type = "success";
-						msg = "The verification link has been sent to your email address";
-					} else {
-						type = "error";
-						msg = "Something goes to wrong. Please try again";
-					}
-				}
-			}
-		})
-		.catch((err) => {
-			if (err) {
-				throw err;
-			}
-		});
-});
 
 
 let transporter = nodemailer.createTransport({
