@@ -82,9 +82,10 @@ router.post(
 					// sending mail
 					transporter.sendMail(mailOptions, (error, info) => {
 						if (error) {
-							res.send(error.message);
+							res.json({mailError:error.message})
+							// res.send(error.message);
 						}
-						res.send("Verification email is sent to your gmail account");
+						res.json({message:"Verification email is sent to your gmail account"});
 					});
 					const token = jwt_generator(response.rows[0]);
 					res
