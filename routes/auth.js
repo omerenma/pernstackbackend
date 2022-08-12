@@ -14,8 +14,8 @@ const nodemailer = require("nodemailer");
 let transporter = nodemailer.createTransport({
 	service: "gmail",
 	auth: {
-		user: "godwin2341@gmail.com",
-		pass: "Omerenma1!",
+		user: "kinmargroupsltd@gmail.com",
+		pass: "kingsly8",
 	},
 });
 
@@ -55,65 +55,66 @@ router.post(
 			// const insert =
 			// 	"INSERT INTO users(name, email, phone, password) VALUES ($1, $2, $3, $4) returning *";
 			// const value = [name, email, phone, hashPassword];
-			const response =  await db
-				.query(
-					"INSERT INTO users(name, email, phone, password, verified, token) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-					[
-						name,
-						email,
-						phone,
-						hashPassword,
-						verified,
-						crypto.randomBytes(64).toString("hex"),
-					]
-				)
+			const response = await db.query(
+				"INSERT INTO users(name, email, phone, password, verified, token) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+				[
+					name,
+					email,
+					phone,
+					hashPassword,
+					verified,
+					crypto.randomBytes(64).toString("hex"),
+				]
+			);
 
-				let mailOptions = {
-					from: ' "Verify your email" <godwin2341@gmail.com>',
-					to: response.rows[0]["email"],
-					subject: "Email verification",
-					html: `<h1>${response.rows[0]["name"]}! thanks for signing up</h1>
+			let mailOptions = {
+				from: ' "Verify your email" <godwin2341@gmail.com>',
+				to: response.rows[0]["email"],
+				subject: "Email verification",
+				html: `<h1>${response.rows[0]["name"]}! thanks for signing up</h1>
 					<h4>Please verify your emaill address to continue<h4>
 					<a href="https://${req.headers.host}/user/verify-email?token=${response.rows[0]["token"]}">Verify Your Email</a>
 					`,
-				};
+			};
 
-				// sending mail
-				transporter.sendMail(mailOptions, (error, info) => {
-					if (error) {
-						res.json({mailError:error.message})
-						// res.send(error.message);
-					}
-					res.json({message:"Verification email is sent to your gmail account"});
+			// sending mail
+			transporter.sendMail(mailOptions, (error, info) => {
+				if (error) {
+					res.json({ mailError: error.message });
+					// res.send(error.message);
+				}
+				res.json({
+					message: "Verification email is sent to your gmail account",
 				});
-				// .then((response) => {
-				// 	// send verification mail to user
-				// 	let mailOptions = {
-				// 		from: ' "Verify your email" <godwin2341@gmail.com>',
-				// 		to: response.rows[0]["email"],
-				// 		subject: "Email verification",
-				// 		html: `<h1>${response.rows[0]["name"]}! thanks for signing up</h1>
-				// 		<h4>Please verify your emaill address to continue<h4>
-				// 		<a href="https://${req.headers.host}/user/verify-email?token=${response.rows[0]["token"]}">Verify Your Email</a>
-				// 		`,
-				// 	};
+			});
+			// .then((response) => {
+			// 	// send verification mail to user
+			// 	let mailOptions = {
+			// 		from: ' "Verify your email" <godwin2341@gmail.com>',
+			// 		to: response.rows[0]["email"],
+			// 		subject: "Email verification",
+			// 		html: `<h1>${response.rows[0]["name"]}! thanks for signing up</h1>
+			// 		<h4>Please verify your emaill address to continue<h4>
+			// 		<a href="https://${req.headers.host}/user/verify-email?token=${response.rows[0]["token"]}">Verify Your Email</a>
+			// 		`,
+			// 	};
 
-				// 	// sending mail
-				// 	transporter.sendMail(mailOptions, (error, info) => {
-				// 		if (error) {
-				// 			res.json({mailError:error.message})
-				// 			// res.send(error.message);
-				// 		}
-				// 		res.json({message:"Verification email is sent to your gmail account"});
-				// 	});
-				// 	const token = jwt_generator(response.rows[0]);
-				// 	res
-				// 		.status(201)
-				// 		.json({ message: "Signup success!", user: response.rows[0] });
-				// })
-				// .catch((err) => {
-				// 	res.json({ message: err.message });
-				// });
+			// 	// sending mail
+			// 	transporter.sendMail(mailOptions, (error, info) => {
+			// 		if (error) {
+			// 			res.json({mailError:error.message})
+			// 			// res.send(error.message);
+			// 		}
+			// 		res.json({message:"Verification email is sent to your gmail account"});
+			// 	});
+			// 	const token = jwt_generator(response.rows[0]);
+			// 	res
+			// 		.status(201)
+			// 		.json({ message: "Signup success!", user: response.rows[0] });
+			// })
+			// .catch((err) => {
+			// 	res.json({ message: err.message });
+			// });
 		} catch (error) {
 			res.status(500).json({ message: "Internal server error" });
 		}
