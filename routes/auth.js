@@ -57,7 +57,7 @@ router.post(
 			// const value = [name, email, phone, hashPassword];
 			await db
 				.query(
-					"INSERT INTO users(name, email, phone, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+					"INSERT INTO users(name, email, phone, password, verified, token) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
 					[
 						name,
 						email,
