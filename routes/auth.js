@@ -4,21 +4,20 @@ const db = require("../db");
 const bcrypt = require("bcryptjs");
 const jwt_generator = require("../utils/jwt_generator");
 const { login } = require("../controller/index");
-const { sendEmail } = require("../utils/sendEmail");
+// const { sendEmail } = require("../utils/sendEmail");
 const randomtoken = require("rand-token");
-const crypto = require('crypto')
-const nodemailer = require('nodemailer')
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
 
 // send verification link
 
-
 let transporter = nodemailer.createTransport({
-	service:'gmail',
-	auth:{
-		user:'godwin2341@gmail.com',
-		pass:'Kingsly8'
-	}
-})
+	service: "gmail",
+	auth: {
+		user: "godwin2341@gmail.com",
+		pass: "Kingsly8",
+	},
+});
 
 // Register user
 router.post(
@@ -42,7 +41,7 @@ router.post(
 		}
 		try {
 			const { name, email, phone, password } = req.body;
-			verified = false
+			verified = false;
 			const check = await db.query("SELECT * FROM users WHERE email = $1", [
 				req.body.email,
 			]);
@@ -59,33 +58,36 @@ router.post(
 			await db
 				.query(
 					"INSERT INTO users(name, email, phone, password) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-					[name, email, phone, hashPassword, verified, crypto.randomBytes(64).toString('hex')]
+					[
+						name,
+						email,
+						phone,
+						hashPassword,
+						verified,
+						crypto.randomBytes(64).toString("hex"),
+					]
 				)
 				.then((response) => {
 					const token = jwt_generator(response.rows[0]);
-					 res.status(201).json({ message: "Signup success!" });
-					 // send verification mail to user
-					 let mailOptions = {
+					res.status(201).json({ message: "Signup success!" });
+					// send verification mail to user
+					let mailOptions = {
 						from: ' "Verify your email" <godwin2341@gmail.com>',
-						to:response.rows[0]['email'],
-						subject:'Email verification',
-						html:`<h1>${response.rows[0]['name']}! thanks for signing up</h1>
+						to: response.rows[0]["email"],
+						subject: "Email verification",
+						html: `<h1>${response.rows[0]["name"]}! thanks for signing up</h1>
 						<h4>Please verify your emaill address to continue<h4>
-						<a href="https://${req.headers.host}/user/verify-email?token=${response.rows[0]['token']}">Verify Your Email</a>
-						`
-					 }
+						<a href="https://${req.headers.host}/user/verify-email?token=${response.rows[0]["token"]}">Verify Your Email</a>
+						`,
+					};
 
-					 // sending mail
-					 transporter.sendMail(mailOptions, (error, info) => {
-						if(error){
-							res.send(error.message)
+					// sending mail
+					transporter.sendMail(mailOptions, (error, info) => {
+						if (error) {
+							res.send(error.message);
 						}
-						res.send('Verification email is sent to your gmail account')
-
-					 })
-					 
-					 
-					 
+						res.send("Verification email is sent to your gmail account");
+					});
 				})
 				.catch((err) => {
 					res.json({ message: err.message });
