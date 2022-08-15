@@ -125,9 +125,8 @@ router.post(
 router.post("/login", async (req, res) => {
 	const { email, password } = req.body;
 	try {
-		const user = await db.pool.query("select * from users where email = $1", [
-			email,
-		]);
+		// const user = await db.pool.query("select * from users where email = $1", [email]);
+		const user =  await db.sequelize.query("select * from users where email = $1", [email])
 		const isMatch = await bcrypt.compare(password, user.rows[0].password);
 		if (user.rows.length != 0) {
 			if (isMatch) {

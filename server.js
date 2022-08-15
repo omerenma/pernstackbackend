@@ -4,12 +4,18 @@ const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const session = require("express-session");
+const db= require('./db')
 // const credentials = require('./credentials')
 
 // Restaurants routes
 const restaurants = require("./routes/index");
 // Review routes
 const reviews = require("./routes/reviews");
+
+db.sequelize.authenticate()
+.then(() => console.log('Connection extablished'))
+.catch(() => console.log('Unable to establish connecton'))
+
 
 app.use(cors());
 // Setting up cookie
