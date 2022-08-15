@@ -7,16 +7,7 @@ const isProduction = process.env.NODE_ENV === "production";
 
 const connectionString = `postgresql://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`;
 
-const pool = new Pool({
-	connectionString: isProduction
-		? process.env.HEROKU_POSTGRESQL_JADE_URL
-		: connectionString,
-	ssl: {
-		rejectUnauthorized: false,
-	},
-});
 
-pool.connect();
 
 const sequelize = new Sequelize({
 	dialect: "postgres",
@@ -28,6 +19,19 @@ const sequelize = new Sequelize({
 		},
 	},
 });
+
+
+
+// const pool = new Pool({
+// 	connectionString: isProduction
+// 		? process.env.HEROKU_POSTGRESQL_JADE_URL
+// 		: connectionString,
+// 	ssl: {
+// 		rejectUnauthorized: false,
+// 	},
+// });
+
+//pool.connect();
 
 module.exports = {
 	query: (text, params) => pool.query(text, params),
