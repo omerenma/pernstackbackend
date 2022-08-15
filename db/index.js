@@ -35,7 +35,7 @@ const sequelize = new Sequelize({
 
 module.exports = {
 	query: (text, params) => pool.query(text, params),
-	pool,
+	// pool,
 	sequelize,
 };
 
