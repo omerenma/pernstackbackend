@@ -9,34 +9,34 @@ const connectionString = `postgresql://${process.env.PGUSER}:${process.env.PGPAS
 
 
 
-const sequelize = new Sequelize({
-	dialect: "postgres",
-	storage: process.env.HEROKU_POSTGRESQL_JADE_URL,
-	dialectOptions: {
-		ssl: {
-			require: true,
-			rejectUnauthorized: false,
-		},
-	},
-});
-
-
-
-// const pool = new Pool({
-// 	connectionString: isProduction
-// 		? process.env.HEROKU_POSTGRESQL_JADE_URL
-// 		: connectionString,
-// 	ssl: {
-// 		rejectUnauthorized: false,
+// const sequelize = new Sequelize({
+// 	dialect: "postgres",
+// 	storage: process.env.HEROKU_POSTGRESQL_JADE_URL,
+// 	dialectOptions: {
+// 		ssl: {
+// 			require: true,
+// 			rejectUnauthorized: false,
+// 		},
 // 	},
 // });
 
-//pool.connect();
+
+
+const pool = new Pool({
+	connectionString: isProduction
+		? process.env.HEROKU_POSTGRESQL_JADE_URL
+		: connectionString,
+	ssl: {
+		rejectUnauthorized: false,
+	},
+});
+
+pool.connect();
 
 module.exports = {
 	query: (text, params) => pool.query(text, params),
 	// pool,
-	sequelize,
+	// sequelize,
 };
 
 // module.exports = pool;
